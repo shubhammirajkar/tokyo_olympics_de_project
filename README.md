@@ -7,21 +7,27 @@
 This project provides a data engineering and anlytical journey on the Tokyo Olympic dataset. Starting with a CSV on GitHub, the data is ingested into the Azure ecosystem via Azure Data Factory. It's initially stored in Azure Data Lake Storage Gen2, then transformed in Azure Databricks. The enriched data, once again housed in ADLS Gen2, undergoes advanced analytics in Azure Synapse. The insights are finally visualized in Azure Synapse or Power BI, offering a comprehensive view of the dataset.
 ## Architecture
 <img src="Images/Architecture.png">
+
 ## Dataset Used
 This contains the details of over 11,000 athletes, with 47 disciplines, along with 743 Teams taking part in the 2021(2020) Tokyo Olympics.
 This dataset contains the details of the Athletes, Coaches, Teams participating as well as the Entries by gender. It contains their names, countries represented, discipline, gender of competitors, name of the coaches.
 
-Source: 
+Source(Kaggle): [2021 Olympics in Tokyo](https://www.kaggle.com/datasets/arjunprasadsarkhel/2021-olympics-in-tokyo)
+
 ## Azure Services Used
 1. **Azure Data Factory:** For data ingestion from GitHub.
 2. **Azure Data Lake Storage Gen2**: As the primary data storage solution.
 3. **Azure Databricks:** For data transformation tasks.
 4. **Azure Synapse Analytics:** To perform in-depth data analytics.
+   
+## Workflow 
+
 ## Initial Setup
 1. Create Azure Free Subscription acoount  
 2. Create a Resource Group 'tokyo-olympic-data' to house and manage all the Azure resources associated with this project. 
 3. Within the created resource group,set up a storage account. This is specifically configured to leverage Azure Data Lake Storage(ADLS) Gen2 capabilities.
 4. Create a Container inside this storage account to hold the project's data. Two directories 'raw-data' and 'transfromed-data' are created to store raw data and transformed data.
+  <img src="Images/storage.png"> 
 
 ## Data Ingestion using Azure Data Factory
 1. Begin by creating an Azure Data Factory workspace within the previously established resource group.
@@ -33,7 +39,11 @@ Source:
 7. Configuring the File Format for and setting up the Linked Service Sink.
 8. Repeat above steps to load all the datasets.
 9. You can connect all the copy data activity together and run them all at once.
+<img src="Images/datafactory_pipeline.png">  
 10. After the pipeline completes its execution, navigate to your Azure Data Lake Storage Gen2. Dive into the "raw_data" folder and validate that the files, like "athletes.csv", "medals.csv", etc., are present and populated with the expected data.
+
+ <img src="Images/raw_data_in_storage.png">
+
 ## Data Transformation using Azure Databricks
 1. Navigate to Azure Databricks within the Azure portal and create a workspace within the previously established resource group and launch it.
 2. Configuring Compute in Databricks
@@ -42,16 +52,23 @@ Source:
 5. Using the credentials (Client ID, Tenant ID, Secret), write the appropriate code in the Databricks notebook to mount ADLS. 
 6. Writing Data Transformations mount ADLS Gen2 to Databricks.
 7. Writing Transformed Data to ADLS Gen2.
+ <img src="Images/transformed_data_tables.png">
+  <img src="Images/transformed_data_contents.png">
 Refer below notebook to transformations and code used to mount ADLS Gen2 to Databricks.
+
+[Tokyo Olympics Transformation.ipynb](https://github.com/shubhammirajkar/tokyo_olympic_de_project/blob/main/Tokyo%20Olympics%20Transformation.ipynb)
 
 ## Setting Up and Using Azure Synapse Analytics
 1. Creating a Synapse Analytics Workspace.
 2. Within Workspace navigate to the "Data" section , choose "Lake Database"  and create a Database "TokyoOlympicDB"
 3. Creating Table from Data Lake  from the Transformed Data folder within your ADLS Gen2 storage.
-
+ <img src="Images/synapse_database_creation.png">
+ 
 ## Performing Data Analysis on the Data
+
 Create SQL script to Perform Exploratory data analysis using SQL.
 You can aslo use PowerBI to generate your analysis reports.
-
+ <img src="Images/synapse_analytics_report.png">
 
 Refer to the SQL scripts used for data analysis 
+[Tokyo Olympics SQL script.sql](https://github.com/shubhammirajkar/tokyo_olympic_de_project/blob/main/Tokyo%20Olympics%20SQL%20script.sql)
