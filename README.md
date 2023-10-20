@@ -1,5 +1,5 @@
 
-# Tokyo Olympic Data Analytics | Azure End-To-End Data Engineering Project 
+# Tokyo Olympics Data Analytics | Azure End-To-End Data Engineering Project 
 
 
 
